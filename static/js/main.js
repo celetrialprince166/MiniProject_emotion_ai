@@ -16,7 +16,8 @@
     let micSelect = document.querySelector("#micSelect");
     let stream = null;
     let tested = false;
-  
+    let result 
+    let canva_value = document.querySelector("canvas")
     async function getStream(constraints) {
       if (!constraints) {
         constraints = { audio: true, video: false };
@@ -121,6 +122,7 @@
       leftchannel.length = rightchannel.length = 0;
       recordingLength = 0;
       if (!context) setUpRecording();
+      canva_value.style.visibility="visible"
     }
   
     function stop() {
@@ -179,8 +181,14 @@
         });
   
         if (response.ok) {
-          let result = await response.json();
+          result = await response.json();
+          
+          const pred_value=document.getElementById('prediction')
+          
+          canva_value.style.visibility="hidden"
+          pred_value.innerHTML="The predicted emotion is " + result.emotion
           console.log("Prediction result:", result);
+        
         } else {
           console.error("Error in upload:", response.statusText);
         }
@@ -335,6 +343,35 @@
       console.log("Start recording");
       start();
     };
+
+
+    document.getElementById('uploadForm').onsubmit = async function(event) {
+      event.preventDefault();
+      let formData = new FormData(this);
+      
+  
+      try {
+        let response = await fetch("/index", {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (response.ok) {
+          result = await response.json();
+          
+          const pred_value=document.getElementById('prediction')
+          
+          canva_value.style.visibility="hidden"
+          pred_value.innerHTML="The predicted emotion is " + result.emotion
+          console.log("Prediction result:", result);
+        
+        } else {
+          console.error("Error in upload:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error in upload:", error);
+      }
+    }
   
     document.querySelector("#stop").onclick = (e) => {
       stop();

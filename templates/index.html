@@ -1,33 +1,58 @@
+
+
+{% extends "base.html" %}
 {% load static %}
+{% block title %}Emotion Prediction{% endblock %}
+
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotion Prediction</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
 <body>
-    <div class="app">
-        <select name="" id="micSelect"></select>
-        <select id="visSelect">
-            <option value="frequencybars">Bar</option>
-            <option value="sinewave">Wave</option>
-            <option value="circle">Circle</option>
-        </select>
+    
+    <div class="content">
+        <div class="app">
+            <select name="" id="micSelect"></select>
+            <select id="visSelect">
+                <option value="frequencybars">Bar</option>
+                <option value="sinewave">Wave</option>
+                <option value="circle">Circle</option>
+            </select>
 
-        <a id="download">Download</a>
+            <a id="download">Download</a>
 
-        <div class="audio-controls">
-            <button id="record">Record</button>
-            <button id="stop">Stop</button>
-            <audio id="audio" controls></audio>
+            <form id="uploadForm" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="file" id="fileInput" accept="audio/*" style="display: none;">
+                <button type="button" id="fileButton"><i class="gg-attachment"></i></button> Upload
+                <button type="submit" id= "prediction-file"><i class="gg-file-add"></i></button><span id="info"></span>
+            </form>
+
+            <div class="audio-controls">
+                <button id="record"><i class="gg-mic"></i></button>
+                <button id="stop"><i class="gg-play-stop-o"></i></button>
+                <audio id="audio" controls></audio>
+            </div>
+            
+            <div id="msg">Recording...</div>
+        
+            <canvas width="500" height="300"></canvas>
+            <div id="prediction">Welcome</div>
         </div>
-
-        <div id="msg">Recording...</div>
-        <canvas width="500" height="300"></canvas>
     </div>
-
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        document.getElementById('fileButton').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+            document.getElementById("info").innerHTML="Click To Predict"
+        });
+        document.getElementById('prediction-file').addEventListener('click', function() {
+        document.getElementById("info").style.visibility="hidden"
+        });
+
+    </script>
+
 </body>
+
 </html>
+{% endblock  %}

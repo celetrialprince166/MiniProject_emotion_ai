@@ -3,12 +3,13 @@ import numpy as np
 import joblib
 from django.conf import settings
 import os
+from collections import Counter
 
 
 
 
 # Path to the saved model
-MODEL_PATH = os.path.join(settings.MEDIA_ROOT, 'models', 'mlp_scaled_model.joblib')
+MODEL_PATH = os.path.join(settings.MEDIA_ROOT, 'models', 'mlp_unscaled_model.joblib')
 
 # Audio augmentation functions
 def pitch(data, sampling_rate, pitch_factor=0.7):
@@ -101,7 +102,13 @@ def make_prediction(path):
     5: 'Sad',
     6: 'Surprise'
 }  # Example mapping
-    predicted_emotion_label = emotion_map[predicted_emotion[0]]
+    
+
+        
+    predict_count = Counter(predicted_emotion)
+    emotion_val=(predict_count.most_common(1)[0][0])
+    print(emotion_val)
+    predicted_emotion_label = emotion_map[max(predicted_emotion)]
     print(prediction)
     print(predicted_emotion)
     return predicted_emotion_label

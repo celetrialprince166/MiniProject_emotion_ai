@@ -8,11 +8,15 @@ from .utils import make_prediction
 import librosa
 import numpy as np
 
-def test_view(request):
-    return HttpResponse("<h1> This is a test page</h1>")
+def home_View(request):
+    return render(request,"home.html")
+
+
 
 @csrf_exempt
 def index(request):
+    prediction_value=None
+    
     if request.method == 'POST':
         audio_file = request.FILES.get('file')
         if audio_file:
@@ -21,12 +25,14 @@ def index(request):
                 for chunk in audio_file.chunks():
                     destination.write(chunk)
             
-            prediction= make_prediction(path=audio_path)
+            prediction_value= make_prediction(path=audio_path)
             
             # Here you would process the file and make predictions
             prediction_result = {
-                'emotion': 'happy'  # Replace with actual prediction result
+                'emotion': prediction_value  # Replace with actual prediction result
             }
             return JsonResponse(prediction_result)
-
-    return render(request, 'index.html')
+    context={
+        "prediction":prediction_value
+    }
+    return render(request, 'index.html',context)
