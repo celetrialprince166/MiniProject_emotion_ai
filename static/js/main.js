@@ -186,7 +186,34 @@
           const pred_value=document.getElementById('prediction')
           
           canva_value.style.visibility="hidden"
-          pred_value.innerHTML="The predicted emotion is " + result.emotion
+
+          if ( result.emotion== "Angry") {
+            pred_value.innerHTML="Audio Predicted As : Angry 😡 "
+            
+          }else if(result.emotion== "Disgust"){
+
+            pred_value.innerHTML="Audio Predicted As : Disgust 🤮"
+          }else if(result.emotion== "Fear"){
+
+            pred_value.innerHTML="Audio Predicted As : Fear 😨"
+          }else if(result.emotion== "Happy"){
+
+            pred_value.innerHTML="Audio Predicted As : Happy😄 "
+          }else if(result.emotion== "Neutral"){
+
+            pred_value.innerHTML="Audio Predicted As : Neutral 😐"
+
+          }else if(result.emotion== "Sad"){
+
+            pred_value.innerHTML="Audio Predicted As : Sad 😢"
+          }else if(result.emotion== "Surprise"){
+
+            pred_value.innerHTML="Audio Predicted As : Surprise 😯"
+          }else{
+            pred_value.innerHTML="Audio Predicted As : Could Not detect And Emotion"
+            
+          }
+        
           console.log("Prediction result:", result);
         
         } else {
@@ -362,7 +389,36 @@
           const pred_value=document.getElementById('prediction')
           
           canva_value.style.visibility="hidden"
-          pred_value.innerHTML="The predicted emotion is " + result.emotion
+          if ( result.emotion== "Angry") {
+            pred_value.innerHTML="Audio Predicted As : Angry 😡 "
+            
+          }else if(result.emotion== "Disgust"){
+
+            pred_value.innerHTML="Audio Predicted As : Disgust 🤮"
+          }else if(result.emotion== "Fear"){
+
+            pred_value.innerHTML="Audio Predicted As : Fear 😨"
+          }else if(result.emotion== "Happy"){
+
+            pred_value.innerHTML="Audio Predicted As : Happy😄 "
+          }else if(result.emotion== "Neutral"){
+
+            pred_value.innerHTML="Audio Predicted As : Neutral 😐"
+
+          }else if(result.emotion== "Sad"){
+
+            pred_value.innerHTML="Audio Predicted As : Sad 😢"
+          }else if(result.emotion== "Surprise"){
+
+            pred_value.innerHTML="Audio Predicted As : Surprise 😯"
+          }else{
+            pred_value.innerHTML="Audio Predicted As : Could Not detect And Emotion"
+            
+          }
+
+
+
+          
           console.log("Prediction result:", result);
         
         } else {
